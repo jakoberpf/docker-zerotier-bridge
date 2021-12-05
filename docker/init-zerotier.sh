@@ -55,7 +55,7 @@ for network_id in $ZT_NETWORK_IDS; do
 			sleep 2
 		done
 
-		ips="`zerotier-cli listnetworks -j | jq -r '.[] | select(.id == "'$network_id'") | .assignedAddresses | join(", ")'`"
+		ips="$(zerotier-cli listnetworks -j | jq -r '.[] | select(.id == "'$network_id'") | .assignedAddresses | join(", ")')"
 		echo "ZT $network_id: has address(es) $ips"
 	)&
 done
