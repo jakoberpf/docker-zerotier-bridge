@@ -38,7 +38,7 @@ ztc conf:set --token=="$ZT_AUTHTOKEN" &>/dev/null
 echo "ZT Identity: $(zerotier-cli info -j | jq -r .address)"
 
 has_ip() {
-	zerotier-cli listnetworks -j | jq -er '.[] | select(.id == "'$1'") | .assignedAddresses | length > 0' &>/dev/null
+	zerotier-cli listnetworks -j | jq -er '.[] | select(.id == "$1") | .assignedAddresses | length > 0' &>/dev/null
 }
 
 for network_id in $ZT_NETWORK_IDS; do
@@ -50,12 +50,12 @@ for network_id in $ZT_NETWORK_IDS; do
   
 	    echo "ZT $network_id: Joining network... $(zerotier-cli join $network_id)"
 
-		while ! has_ip $network_id; do
+		while ! has_ip "$network_id"; do
 			echo "ZT $network_id: waiting for IP(s)..."
 			sleep 2
 		done
 
-		ips="$(zerotier-cli listnetworks -j | jq -r '.[] | select(.id == "'$network_id'") | .assignedAddresses | join(", ")')"
+		ips="$(zerotier-cli listnetworks -j | jq -r '.[] | select(.id == "$network_id") | .assignedAddresses | join(", ")')"
 		echo "ZT $network_id: has address(es) $ips"
 	)&
 done
