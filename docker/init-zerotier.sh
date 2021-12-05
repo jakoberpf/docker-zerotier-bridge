@@ -48,7 +48,7 @@ for network_id in $ZT_NETWORK_IDS; do
 	  		echo "ZT If you join this or any other public network, make sure your computer is up to date on all security patches and you've stopped, locally firewalled, or password protected all services on your system that listen for outside connections."
 	    fi
   
-	    echo "ZT $network_id: Joining network... `zerotier-cli join "$network_id"`"
+	    echo "ZT $network_id: Joining network... `zerotier-cli join $network_id`"
 
 		while ! has_ip $network_id; do
 			echo "ZT $network_id: waiting for IP(s)..."
